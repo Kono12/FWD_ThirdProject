@@ -6,13 +6,71 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/header_img"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_baseline_cloud_download_24"
+        android:background="#072344"
+        />
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/header_img"
+        android:layout_marginTop="30dp"
+        >
+
+        <RadioButton
+            android:id="@+id/Glide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Glide- Image Loading Library"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:layout_marginLeft="8dp"
+            android:onClick="ChoeseOperation"
+            />
+
+        <RadioButton
+            android:id="@+id/Load"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Load App"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:layout_marginLeft="8dp"
+            android:onClick="ChoeseOperation"
+            />
+
+        <RadioButton
+            android:id="@+id/Retro"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retrofit - Type safe HTTP client"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:layout_marginLeft="8dp"
+            android:onClick="ChoeseOperation"
+            />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/CutomBTN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Place holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:onClick="ButtonOnClick"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
