@@ -8,5 +8,6 @@ object Constants {
         "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/masterXXX.zip"
     const val RETROFIT_URL =
         "https://github.com/square/retrofit/archive/refs/heads/master.zip"
+    var downloadId :Long= 0
 
 }
