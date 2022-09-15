@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FWD_ThirdProject</string>
+    <string name="custom_action">custom action</string>
 </resources>

@@ -9,5 +9,7 @@ object Constants {
     const val RETROFIT_URL =
         "https://github.com/square/retrofit/archive/refs/heads/master.zip"
     var downloadId :Long= 0
+    var fileName=""
+    var st=""
 
 }

@@ -15,12 +15,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.core.app.NotificationManagerCompat
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     var option : String? =""
-    var filename : String? =""
     lateinit var receiver: DownloadDoneReciever
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +33,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        NotificationsHelper.createNotificationChannel(
+            this,
+            NotificationManagerCompat.IMPORTANCE_DEFAULT,
+            false,
+            getString(R.string.app_name),
+            "download notification channel"
+        )
+
+
 
     }
 
@@ -40,15 +49,15 @@ class MainActivity : AppCompatActivity() {
          if (view is RadioButton && view.isChecked){
            if (view.id==R.id.Glide){
                option=Constants.GLIDE_URL
-           filename="Glide"
+           Constants.fileName="Glide"
            }
              else if(view.id==R.id.Load){
                  option=Constants.LOAD_APP_URL
-             filename="Load App"
+             Constants.fileName="Load App"
              }
              else if (view.id==R.id.Retro){
                  option=Constants.RETROFIT_URL
-             filename="Retrofit"
+             Constants.fileName="Retrofit"
              }
          }
     }
@@ -62,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         try{
                 val download = DownloadManager.Request(Uri.parse(optionSelected))
                     .setTitle(getString(R.string.app_name))
-                    .setDescription(filename)
+                    .setDescription(Constants.fileName)
                     .setAllowedOverRoaming(true)
                     .setRequiresCharging(false)
                     .setAllowedOverMetered(true)
