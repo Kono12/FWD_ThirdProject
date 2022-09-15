@@ -7,6 +7,7 @@ import android.app.PendingIntent.FLAG_MUTABLE
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
@@ -64,7 +65,7 @@ object NotificationsHelper {
 
     fun NotificationManager.createNotification(
         context: Context, title: String, message: String,
-        autoCancel: Boolean, fileName: String,status:String
+        autoCancel: Boolean, fileName: String, status: String
     ) {
 
         //TODO: STEP[3] Create a new notification
@@ -75,11 +76,14 @@ object NotificationsHelper {
             setContentTitle(title)
             setContentText(message)
             setAutoCancel(autoCancel)
-      //      setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+            //      setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
             priority = NotificationCompat.PRIORITY_DEFAULT
 
             val pendingIntent: PendingIntent?
-            val intent = Intent(context,Detail::class.java)
+            val intent = Intent(context, Detail::class.java)
+         //   Toast.makeText(context,fileName+status,Toast.LENGTH_SHORT).show()
+            intent.putExtra("fileName", fileName)
+            intent.putExtra("status", status)
             pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 PendingIntent.getActivity(context, 0, intent, FLAG_MUTABLE)
             } else {
@@ -99,11 +103,10 @@ object NotificationsHelper {
             Detail::class.java
         )
 
-      //  detailsActivity.action = context.getString(R.string.custom_action)
+        detailsActivity.action = context.getString(R.string.custom_action)
         detailsActivity.putExtra("notification_id", 123123123)
         detailsActivity.putExtra("fileName", fileName)
         detailsActivity.putExtra("status", status)
-
         val detailActivityPendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.getActivity(context, 0, detailsActivity, FLAG_MUTABLE)
         } else {
@@ -115,40 +118,15 @@ object NotificationsHelper {
             )
         }
 
+        notificationBuilder.addAction(
+            R.drawable.ic_launcher_foreground,
+            "Go to activity",
+            detailActivityPendingIntent
+        )
+
+
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(1001, notificationBuilder.build())
 
-    }
-
-    /**
-     * Creates the pending intent for the Administered Action for the notification.
-     *
-     * @param context current application context
-     */
-    private fun createPendingIntentForAction(context: Context): PendingIntent? {
-        /*
-            Create an Intent to update the ReminderData if Administer action is clicked
-         */
-        val administerIntent = Intent(context, MainActivity::class.java).apply {
-//            putExtra(AppGlobalReceiver.NOTIFICATION_ID, reminderData.id)
-//            putExtra(ReminderDialog.KEY_ID, reminderData.id)
-//            putExtra(ReminderDialog.KEY_ADMINISTERED, true)
-        }
-
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getBroadcast(
-                context,
-                ADMINISTER_REQUEST_CODE,
-                administerIntent,
-                FLAG_MUTABLE
-            )
-        } else {
-            PendingIntent.getBroadcast(
-                context,
-                ADMINISTER_REQUEST_CODE,
-                administerIntent,
-                PendingIntent.FLAG_ONE_SHOT
-            )
-        }
     }
 }

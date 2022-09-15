@@ -10,39 +10,40 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 class Detail : AppCompatActivity() {
-    lateinit var fileNameTxt:TextView
-    lateinit var statusTxt:TextView
+    lateinit var fileNameTxt: TextView
+    lateinit var statusTxt: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val notificationManager = getSystemService(NotificationManager::class.java)
-        notificationManager.cancelAll()
+//
+//        val notificationManager = getSystemService(NotificationManager::class.java)
+//        notificationManager.cancelAll()
 
         setContentView(R.layout.activity_detail)
-        fileNameTxt=findViewById(R.id.fileName)
-        statusTxt=findViewById(R.id.state)
+        fileNameTxt = findViewById(R.id.fileName)
+        statusTxt = findViewById(R.id.state)
+////
+        val file = intent.getStringExtra("fileName")
+        val statt = intent.getStringExtra("status")
 //
-//        val file=intent.extras?.getString("fileName")
-//        val statt=intent.extras?.getString("status")
+//        val file=Constants.fileName
+//        val statt=Constants.st
 
-        val file=Constants.fileName
-        val statt=Constants.st
+        //  Toast.makeText(applicationContext,file+statt,Toast.LENGTH_SHORT).show()
 
-       // Toast.makeText(applicationContext,file+statt,Toast.LENGTH_SHORT).show()
+        fileNameTxt.text = file
 
-        fileNameTxt.text=file
-        if (statt!!.equals("Success")){
-            statusTxt.text="Successful"
-            statusTxt.setTextColor(ContextCompat.getColor(applicationContext,R.color.green))
-        }else {
-           statusTxt.text="Fail"
-            statusTxt.setTextColor(ContextCompat.getColor(applicationContext,R.color.red))
+        if (statt.equals("Success")) {
+            statusTxt.text = "Successful"
+            statusTxt.setTextColor(ContextCompat.getColor(applicationContext, R.color.green))
+        } else {
+            statusTxt.text = "Fail"
+            statusTxt.setTextColor(ContextCompat.getColor(applicationContext, R.color.red))
         }
 
     }
 
     fun ClickedBTN(view: View) {
-        val i = Intent(this,MainActivity::class.java)
+        val i = Intent(this, MainActivity::class.java)
         startActivity(i)
     }
 }

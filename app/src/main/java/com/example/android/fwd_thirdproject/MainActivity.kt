@@ -20,18 +20,19 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    var option : String? =""
+    var option: String? = ""
     lateinit var receiver: DownloadDoneReciever
+    lateinit var customButtonn: CustomButtonn
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        customButtonn = findViewById(R.id.CutomBTN)
 
-        receiver = DownloadDoneReciever()
+        receiver = DownloadDoneReciever(customButtonn)
         IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE).also {
-            registerReceiver(receiver,it)
+            registerReceiver(receiver, it)
         }
-
 
         NotificationsHelper.createNotificationChannel(
             this,
@@ -42,50 +43,46 @@ class MainActivity : AppCompatActivity() {
         )
 
 
-
     }
 
     fun ChoeseOperation(view: View) {
-         if (view is RadioButton && view.isChecked){
-           if (view.id==R.id.Glide){
-               option=Constants.GLIDE_URL
-           Constants.fileName="Glide"
-           }
-             else if(view.id==R.id.Load){
-                 option=Constants.LOAD_APP_URL
-             Constants.fileName="Load App"
-             }
-             else if (view.id==R.id.Retro){
-                 option=Constants.RETROFIT_URL
-             Constants.fileName="Retrofit"
-             }
-         }
-    }
-
-    fun ButtonOnClick(view: View) {
-       // Toast.makeText(this,DownloadManager.Request.VISIBILITY_HIDDEN.toString(),Toast.LENGTH_SHORT).show()
-        download(option)
-    }
-
-    private fun download(optionSelected : String?) {
-        try{
-                val download = DownloadManager.Request(Uri.parse(optionSelected))
-                    .setTitle(getString(R.string.app_name))
-                    .setDescription(Constants.fileName)
-                    .setAllowedOverRoaming(true)
-                    .setRequiresCharging(false)
-                    .setAllowedOverMetered(true)
-
-                val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-                Constants.downloadId =
-                    downloadManager.enqueue(download)
-
-        }catch (E : Exception){
-            Toast.makeText(this,"Chose one",Toast.LENGTH_SHORT).show()
+        if (view is RadioButton && view.isChecked) {
+            if (view.id == R.id.Glide) {
+                option = Constants.GLIDE_URL
+                Constants.fileName = "Glide"
+            } else if (view.id == R.id.Load) {
+                option = Constants.LOAD_APP_URL
+                Constants.fileName = "Load App"
+            } else if (view.id == R.id.Retro) {
+                option = Constants.RETROFIT_URL
+                Constants.fileName = "Retrofit"
+            }
         }
     }
 
+    fun ButtonOnClick(view: View) {
+        // Toast.makeText(this,DownloadManager.Request.VISIBILITY_HIDDEN.toString(),Toast.LENGTH_SHORT).show()
+        download(option)
+    }
 
+    private fun download(optionSelected: String?) {
+        try {
+            val download = DownloadManager.Request(Uri.parse(optionSelected))
+                .setTitle(getString(R.string.app_name))
+                .setDescription(Constants.fileName)
+                .setAllowedOverRoaming(true)
+                .setRequiresCharging(false)
+                .setAllowedOverMetered(true)
+
+            val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+            Constants.downloadId =
+                downloadManager.enqueue(download)
+            customButtonn.buttonState = ButtonState.Loading
+
+        } catch (E: Exception) {
+            Toast.makeText(this, "Chose one", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onStop() {
         super.onStop()

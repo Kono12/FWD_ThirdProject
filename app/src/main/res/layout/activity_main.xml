@@ -60,10 +60,14 @@
     </RadioGroup>
 
 
-    <Button
+    <com.example.android.fwd_thirdproject.CustomButtonn
         android:id="@+id/CutomBTN"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
+        app:backgroundColor="#2C59A1"
+        app:textColor="@color/white"
+        app:buttonLoadingColor="#300744"
+        app:buttonCircleColor="#BD0B0B"
         android:text="Place holder"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="50dp"
